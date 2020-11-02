@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <p>Clean</p>
-
-    <h1>{{ profiles }}</h1>
+    <pre>{{ profiles }}</pre>
+    <div v-for="profile in profiles" :key="profile.id">
+      {{ profile.bio }}
+    </div>
 
 <!--    <input v-model="form.body" />-->
 <!--    <button @click="add">Add item</button>-->
@@ -37,7 +38,7 @@ export default {
           email: 'alena@gmail.com',
           profile: {
             id: 13,
-            bio: 'bio text',
+            bio: 'First bio text',
             life_goal: 'be awesome',
             // needs to match up user if
             // user_id: 17
@@ -49,7 +50,7 @@ export default {
           email: 'shannon@gmail.com',
           profile: {
             id: 14,
-            bio: 'bio text',
+            bio: 'Second bio text',
             life_goal: 'be awesome too',
             // needs to match up user if
             // user_id: 17
