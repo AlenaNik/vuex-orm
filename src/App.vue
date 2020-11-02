@@ -2,7 +2,7 @@
   <div id="app">
     <p>Clean</p>
 
-    <h1>{{ user.name }}</h1>
+    <h1>{{ profiles }}</h1>
 
 <!--    <input v-model="form.body" />-->
 <!--    <button @click="add">Add item</button>-->
@@ -15,7 +15,7 @@
 
 <script>
 import Profile from './models/Profile'
-import Item from './models/Item'
+import User from './models/User'
 
 export default {
   name: 'App',
@@ -29,40 +29,49 @@ export default {
 
   beforeMount() {
 
-    Item.insert({
-      data: {
-        id: 17,
-        name: 'alena',
-        email: 'alena@gmail.com'
-      }
-    })
-
-    Profile.insert({
-      data: {
-        id: 13,
-        bio: 'bio text',
-        life_goal: 'be awesome',
-        // needs to match up user if
-        user_id: 17
-      }
+    User.insert({
+      data: [
+        {
+          id: 17,
+          name: 'alena',
+          email: 'alena@gmail.com',
+          profile: {
+            id: 13,
+            bio: 'bio text',
+            life_goal: 'be awesome',
+            // needs to match up user if
+            // user_id: 17
+          }
+        },
+        {
+          id: 18,
+          name: 'shannon',
+          email: 'shannon@gmail.com',
+          profile: {
+            id: 14,
+            bio: 'bio text',
+            life_goal: 'be awesome too',
+            // needs to match up user if
+            // user_id: 17
+          }
+        }
+      ]
     })
   },
 
   computed: {
 
-    user() {
-     return Item.find(17)
+    profiles() {
+     return Profile.query()
+      .with('user')
+      .get()
     },
-
-    items() {
-      return Item.all()
-    }
   },
 
   methods: {
     // add() {
-    //   Item.insert({ data: this.form })
-    //   console.log(Item)
+    //   User.insert({ data: this.form })
+    //   console.log(User)
     // }
   }
 }
