@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <pre>{{ profiles }}</pre>
-    <div v-for="profile in profiles" :key="profile.id">
-      {{ profile.bio }}
-    </div>
+<!--    <pre>{{ profiles }}</pre>-->
+<!--    <div v-for="profile in profiles" :key="profile.id">-->
+<!--      {{ profile.bio }}-->
+<!--    </div>-->
 
 <!--    <input v-model="form.body" />-->
 <!--    <button @click="add">Add item</button>-->
@@ -11,6 +11,8 @@
 <!--      <li>{{ item }}</li>-->
 <!--      <li>{{ item.body }}</li>-->
 <!--    </ul>-->
+
+    <pre> {{ user.lists }}</pre>
   </div>
 </template>
 
@@ -36,25 +38,20 @@ export default {
           id: 17,
           name: 'alena',
           email: 'alena@gmail.com',
-          profile: {
-            id: 13,
-            bio: 'First bio text',
-            life_goal: 'be awesome',
-            // needs to match up user if
-            // user_id: 17
-          }
-        },
-        {
-          id: 18,
-          name: 'shannon',
-          email: 'shannon@gmail.com',
-          profile: {
-            id: 14,
-            bio: 'Second bio text',
-            life_goal: 'be awesome too',
-            // needs to match up user if
-            // user_id: 17
-          }
+          lists: [
+            {
+              id: '015858a1-2a08-4724-b464-048650e85ce0',
+              title: 'shopping'
+            },
+            {
+              id: 'f93fd348-d8fb-4915-a98a-6a0d9f4ee5a8',
+              title: 'eating tacos'
+            },
+            {
+              id: 'be72879c-1159-4423-b0b9-65d9721df9c0',
+              title: 'making sushi'
+            }
+          ]
         }
       ]
     })
@@ -62,11 +59,11 @@ export default {
 
   computed: {
 
-    profiles() {
-     return Profile.query()
-      .with('user')
-      .get()
-    },
+    user() {
+      return User.query()
+      .with('lists')
+      .find(17)
+    }
   },
 
   methods: {
