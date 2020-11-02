@@ -1,17 +1,69 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p>Clean</p>
+
+    <h1>{{ user.name }}</h1>
+
+<!--    <input v-model="form.body" />-->
+<!--    <button @click="add">Add item</button>-->
+<!--    <ul v-for="item in items" :key="item.$id">-->
+<!--      <li>{{ item }}</li>-->
+<!--      <li>{{ item.body }}</li>-->
+<!--    </ul>-->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Profile from './models/Profile'
+import Item from './models/Item'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      form: {
+        body: ''
+      }
+    }
+  },
+
+  beforeMount() {
+
+    Item.insert({
+      data: {
+        id: 17,
+        name: 'alena',
+        email: 'alena@gmail.com'
+      }
+    })
+
+    Profile.insert({
+      data: {
+        id: 13,
+        bio: 'bio text',
+        life_goal: 'be awesome',
+        // needs to match up user if
+        user_id: 17
+      }
+    })
+  },
+
+  computed: {
+
+    user() {
+     return Item.find(17)
+    },
+
+    items() {
+      return Item.all()
+    }
+  },
+
+  methods: {
+    // add() {
+    //   Item.insert({ data: this.form })
+    //   console.log(Item)
+    // }
   }
 }
 </script>
